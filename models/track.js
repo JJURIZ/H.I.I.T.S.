@@ -11,6 +11,7 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      models.track.belongsToMany(models.user, { through: "fave" })
     }
   };
   track.init({

@@ -1,7 +1,6 @@
 'use strict';
-const {
-  Model
-} = require('sequelize');
+const bcrypt = require("bcrypt");
+const { Model } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
   class user extends Model {
     /**
@@ -14,9 +13,32 @@ module.exports = (sequelize, DataTypes) => {
     }
   };
   user.init({
-    email: DataTypes.STRING,
-    password: DataTypes.STRING,
-    name: DataTypes.STRING,
+    name: {
+      type: DataTypes.STRING,
+      validate: {
+        len: {
+          args: [1, 99],
+          msg: "Name must be between 1 and 99 characters",
+        },
+      },
+    },
+    email: {
+      type: DataTypes.STRING,
+      validate: {
+        isEmail: {
+          msg: "Invalid email",
+        },
+      },
+    },
+    password: {
+      type: DataTypes.STRING,
+      validate: {
+        len: {
+          args: [8, 99],
+          msg: "Password must be between 8 and 99 characters",
+        },
+      },
+    },
     isAdmin: DataTypes.BOOLEAN
   }, {
     sequelize,
