@@ -35,7 +35,7 @@ router.get('/', (req, res) => {
             }
         }
         let track = encodeURIComponent(req.query.track)
-        axios.get(`https://api.spotify.com/v1/search?q=${track}&type=track,track&offset=0&limit=25`, config)
+        axios.get(`https://api.spotify.com/v1/search?q=${track}&type=track,track&offset=0&limit=10`, config)
         .then((response) => {
             console.log(response.data.tracks.items[0].album.artists[0].name)
             console.log(response.data.tracks.items[0].duration_ms)
