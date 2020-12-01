@@ -3,14 +3,18 @@ const passport = require('../config/ppConfig');
 const router = express.Router();
 const db = require('../models');
 
+
+// ROUTE TO RENDER SIGNUP PAGE
 router.get('/signup', (req, res) => {
   res.render('auth/signup');
 });
 
+// ROUTE TO RENDER LOGIN PAGE
 router.get('/login', (req, res) => {
   res.render('auth/login');
 });
 
+// ROUTE FOR CREATING NEW USER
 router.post('/signup', (req, res) => {
   console.log(req.body);
 
@@ -27,7 +31,7 @@ router.post('/signup', (req, res) => {
       console.log(`${user.name} was created`);
       // Flash Message
       const successObject = {
-        successRedirect: '/',
+        successRedirect: '/user',
         successFlash: 'Account created and logging in...'
       }
         passport.authenticate('local', successObject)(req, res)
@@ -44,14 +48,16 @@ router.post('/signup', (req, res) => {
   })
 });
 
+// ROUTE FOR LOGGING IN EXISTING USER
 router.post('/login', passport.authenticate('local', { 
-  successRedirect: '/',
+  successRedirect: '/user',
   failureRedirect: '/auth/login',
   successFlash: 'Welcome back...',
-  failureFlash: 'Either email or password is incorrect. Please try again.'
+  failureFlash: 'Either email or password is incorrect. Please try again.',
  }));
 
- router.get('/logout', (req, res) => {
+ // ROUTE FOR LOGGING OUT
+ router.get('/auth/logout', (req, res) => {
   req.logOut();
   req.flash('success', 'Logging out... See you soon.');
   res.redirect('/');

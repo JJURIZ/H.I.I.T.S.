@@ -1,0 +1,14 @@
+<h1>Welcome User</h1>
+
+<form method="GET" action="/user">
+  <input type="text" name="track" placeholder="Search songs..." />
+  <input type="submit" />
+</form>
+
+<% if (tracks) { %> <% tracks.forEach(track => { %>
+  <h4><%= track.name %> -  <%= track.artist %></h4>
+<% }) %> 
+<% } else {%>
+<h4>No Results Matching Your Search</h4>
+<% } %>
+

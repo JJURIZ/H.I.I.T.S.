@@ -49,16 +49,17 @@ app.get('/', (req, res) => {
   res.render('index', { alerts: res.locals.alerts });
 });
 
-app.get('/profile', isLoggedIn, (req, res) => {
-  res.render('profile');
-});
+// EXTRANEOUS - DELETE WHEN CONFIRMED IT IS NOT NEEDED
+// app.get('/user', isLoggedIn, (req, res) => {
+//   res.render('user');
+// });
 
 app.use('/auth', require('./routes/auth'));
-app.use('/user', require('./routes/user'));
+app.use('/user', isLoggedIn, require('./routes/user'));
 
 
 
-const PORT = process.env.PORT || 3001;
+const PORT = process.env.PORT || 3005;
 const server = app.listen(PORT, () => {
   console.log(`Listening on ${PORT}`);
 });
