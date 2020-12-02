@@ -19,7 +19,10 @@ module.exports = (sequelize, DataTypes) => {
     artist: DataTypes.STRING,
     tempo: DataTypes.FLOAT,
     explicit: DataTypes.BOOLEAN,
-    durationMs: DataTypes.INTEGER
+    durationMs: DataTypes.INTEGER,
+    spotify_id: DataTypes.STRING,
+    preview_url: DataTypes.STRING
+
   }, {
     sequelize,
     modelName: 'track',

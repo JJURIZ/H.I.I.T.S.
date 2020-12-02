@@ -1,6 +1,10 @@
-<% if (tracks) { %> <% tracks.forEach(track => { %>
-        <h4><%= track.name %></h4>
-    <% }) %> 
-<% } else {%>
-<h4>No Results Matching Your Search</h4>
-<% } %>
+
+
+
+
+<% if(favoriteSongs.length === 0) { %> 
+  <h4>No Songs Added</h4>
+<% } else { %>
+  <% favoriteSongs.forEach((fave) => { %>
+    <h4><%`${favorteSong.name}` %></h4>
+<% }) %> 

@@ -1,6 +1,6 @@
 <h1>Welcome User</h1>
 
-<form method="GET" action="/user">
+<form method="GET" action="/user/:track"> <!--Why is this a GET and not a POST route? Does not work as -->
   <input type="text" name="track" placeholder="Search songs..." />
   <input type="submit" />
 </form>
@@ -11,13 +11,23 @@
 <%   return `${minutes}:${seconds < 10 ? '0' : ''}` + seconds; %>
 <% } %>
 
+<% const isExplicit = (bool) => { %>
+  <%   return bool === true ? 'Yes' : 'No' %>
+  <% } %>
+
 <% if (tracks) { %> <% tracks.forEach(track => { %>
         <h4>Name: <%= track.name %></h4>
-        <h4>Explicit: <%= track.explicit %></h4>
         <h4>Artist: <%= track.album.artists[0].name %></h4>
         <h4>Length: <%= msToMinutesSeconds(track.duration_ms) %></h4>
+        <h4>Explicit: <%= isExplicit(track.explicit) %></h4>
+        <form method="POST" action="/user"> <!--Action = Route -->
+          <input hidden type="text" name="spotify_id" value="<%= track.id %>">
+          <button class="btn btn-primary" type="submit">Add to Favorite Songs</button>
+        </form>
     <% }) %> 
 <% } else {%>
 <h4>No Results Matching Your Search</h4>
 <% } %>
+
+
 
