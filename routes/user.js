@@ -11,11 +11,31 @@ const authKey = Buffer.from(`${clientId}:${clientSecret}`).toString("base64");
 
 // USER HOMEPAGE
 router.get("/", (req, res) => {
-  db.fave.findAll()
-  .then((faves) => {
-    res.render("user", { faves, tracks: [] });
+      res.render("user", { tracks: [] });
   });
-});
+
+router.get('/faveTest', (req, res) => {
+    db.fave.findAll({
+        where: {
+            userId: req.session.passport.user
+        }
+    })
+    .then((tracks) => {
+        console.log(tracks)
+        const spotifyIds = tracks.map(track => {
+            return track.spotify_id
+        })
+        return db.track.findAll({
+            where: {
+                spotify_id: spotifyIds
+            }
+        })
+    })
+    .then((faves) => {
+        console.log(`is this working? ${faves}`);
+        res.render('faveTest', { faves })
+    })
+})
 
 // FIND SONGS
 router.get("/:track", (req, res) => {
@@ -56,8 +76,7 @@ router.get("/:track", (req, res) => {
 
 // ADD TRACK TO FAVORITES
 router.post("/", (req, res) => {
-  db.track
-    .findOrCreate({
+  db.track.findOrCreate({
       where: { spotify_id: req.body.id },
       defaults: {
         title: req.body.title,

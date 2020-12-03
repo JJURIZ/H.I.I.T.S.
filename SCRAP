@@ -1,15 +1,24 @@
 
-
-
-
-<% if(favoriteSongs.length === 0) { %> 
-  <h4>No Songs Added</h4>
-<% } else { %>
-  <% favoriteSongs.forEach((fave) => { %>
-    <h4><%`${favorteSong.name}` %></h4>
-<% }) %> 
+<% faves.forEach((fave) => { %>
+    <p> <%= fave.spotify_id %>  </p>
+<% }) %>
 
 
 <% fave.forEach((faves) => { %>
 <% faves.spotify_id %> 
 <% }); %> 
+
+
+<h1>Your favorite songs</h1>
+<% tracks.forEach((fave) => { %>
+  <% if (fave.spotify_id && fave.userId) {  %> 
+  <p> <%= tracks.name %>  </p>
+<% } %>
+<% }) %>
+
+
+<h1>My Favorites</h1>
+<% faves.forEach((fave) => { %>
+  <% fave.spotify_id %> 
+  <% }); %> 
+  
