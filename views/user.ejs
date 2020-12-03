@@ -21,7 +21,12 @@
         <h4>Length: <%= msToMinutesSeconds(track.duration_ms) %></h4>
         <h4>Explicit: <%= isExplicit(track.explicit) %></h4>
         <form method="POST" action="/user"> <!--Action = Route -->
-          <input hidden type="text" name="spotify_id" value="<%= track.id %>">
+          <input hidden type="text" name="id" value="<%= track.id %>">
+          <input hidden type="text" name="title" value="<%= track.name %>">
+          <input hidden type="text" name="artist" value="<%= track.album.artists[0].name %>">
+          <input hidden type="text" name="durationMs" value="<%= track.duration_ms %>">
+          <input hidden type="text" name="preview_url" value="<%= track.preview_url %>">
+          <input hidden type="text" name="explicit" value="<%= track.explicit %>">
           <button class="btn btn-primary" type="submit">Add to Favorite Songs</button>
         </form>
     <% }) %> 

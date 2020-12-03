@@ -35,12 +35,6 @@ router.get('/:track', (req, res) => {
         let track = encodeURIComponent(req.query.track)
         axios.get(`https://api.spotify.com/v1/search?q=${track}&type=track,track&offset=0&limit=10`, config)
         .then((response) => {
-            // console.log(response.data.tracks.items[0].album.artists[0].name)
-            // console.log(response.data.tracks.items[0].duration_ms)
-            // console.log(response.data.tracks.items[0].explicit)
-            // console.log(response.data.tracks.items[0].preview_url)
-            // console.log(response.data.tracks.items[0].album.name)
-            console.log(response.data.tracks.items[0])
             let tracks = response.data.tracks.items
             res.render('user', { tracks })
         })
@@ -50,14 +44,37 @@ router.get('/:track', (req, res) => {
     })
 })
 
+// ADD TRACK TO FAVORITES
 router.post('/', (req, res) => {
     db.track.findOrCreate({
         where: { spotify_id: req.body.id },
-        defaults: { track: req.body.track }
+        defaults: {
+            title: req.body.title,
+            artist: req.body.artist,
+            durationMs: req.body.durationMs,
+            explicit: req.body.explicit,
+            preview_url: req.body.preview_url
+        }
     })
-    .then(([track, created]) => {
-        db.
+    .then((fave) => {
+        // console.log(`This is what is getting PASSED IN ${fave[0].spotify_id}`)
+        // console.log(`This is what is getting PASSED IN for ID ${Object.getOwnPropertyNames(res)}`)
+        // console.log(`This is what is getting PASSED IN for LOCALS ${res.locals.currentUser}`)
+        // console.log(`This is what is getting PASSED IN for REQ USER ${Object.getOwnPropertyNames(req.user)}`)
+        // console.log(`This is what is getting PASSED IN for REQ SESSION ${req.session.passport.user}`)
+       db.fave.findOrCreate({
+           where: { spotify_id: fave[0].spotify_id },
+           defaults: {
+               userId: req.session.passport.user
+           }
+       })
     })
-})
+    .catch((err) => {
+        console.log(err)
+    })
+    .then(() => { 
+        res.redirect('/user')
+    })
+});
 
 module.exports = router;
