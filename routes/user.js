@@ -21,7 +21,7 @@ router.get('/faveTest', (req, res) => {
         }
     })
     .then((tracks) => {
-        console.log(tracks)
+        // console.log(tracks)
         const spotifyIds = tracks.map(track => {
             return track.spotify_id
         })

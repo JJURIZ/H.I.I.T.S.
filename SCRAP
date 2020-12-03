@@ -22,3 +22,15 @@
   <% fave.spotify_id %> 
   <% }); %> 
   
+
+  <pre><%= JSON.stringify(fave) %></pre>
+
+  <% const isNull = (previewValue) => { %>
+    <% return previewValue === null ? %>
+    <p>No Preview Available</p> 
+    <% : %>
+    <audio controls><source src="<%= fave.preview_url %>" /></audio> 
+<% } %> 
+
+
+    <p><%= isNull(fave.preview_url) %> </p>

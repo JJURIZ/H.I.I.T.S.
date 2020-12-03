@@ -1,5 +1,21 @@
 <h1>test</h1>
 
+
+
 <% faves.forEach((fave) => { %>
-    <pre><%= JSON.stringify(fave) %></pre>
+    <p><%= fave.title %> </p>
+    <p><%= fave.artist %> </p>
+    <p><%= fave.explicit %> </p>
+    <p><%= fave.durationMs %> </p>
+    <% console.log(fave.preview_url) %>
+    <% if (fave.preview_url === "") { %>
+        <p>No Preview Available</p> 
+    <% } else { %>
+        <audio controls><source src="<%= fave.preview_url %>" /></audio> 
+    <% } %> 
+    
+    
+<pre><%= JSON.stringify(fave) %></pre>
 <% }) %>
+
+
