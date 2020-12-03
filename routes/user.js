@@ -11,8 +11,20 @@ const authKey = Buffer.from(`${clientId}:${clientSecret}`).toString("base64");
 
 // USER HOMEPAGE
 router.get('/', (req, res) => {
-  res.render('user', { tracks: [] });
+    db.fave.findAll()
+    .then((faves) => {
+  res.render('user', { faves, tracks: [] });
 });
+});
+
+
+// router.get('/faveTest', (req, res) => {
+//     db.fave.findAll()
+//     .then((faves) => {
+//         res.render('faveTest', { faves });
+//     })
+//   });
+
 
 // FIND SONGS
 router.get('/:track', (req, res) => {
@@ -57,16 +69,11 @@ router.post('/', (req, res) => {
         }
     })
     .then((fave) => {
-        // console.log(`This is what is getting PASSED IN ${fave[0].spotify_id}`)
-        // console.log(`This is what is getting PASSED IN for ID ${Object.getOwnPropertyNames(res)}`)
-        // console.log(`This is what is getting PASSED IN for LOCALS ${res.locals.currentUser}`)
-        // console.log(`This is what is getting PASSED IN for REQ USER ${Object.getOwnPropertyNames(req.user)}`)
-        // console.log(`This is what is getting PASSED IN for REQ SESSION ${req.session.passport.user}`)
        db.fave.findOrCreate({
-           where: { spotify_id: fave[0].spotify_id },
-           defaults: {
-               userId: req.session.passport.user
-           }
+           where: { 
+               spotify_id: fave[0].spotify_id,
+               userId: req.session.passport.user 
+            }
        })
     })
     .catch((err) => {

@@ -8,3 +8,8 @@
   <% favoriteSongs.forEach((fave) => { %>
     <h4><%`${favorteSong.name}` %></h4>
 <% }) %> 
+
+
+<% fave.forEach((faves) => { %>
+<% faves.spotify_id %> 
+<% }); %> 
