@@ -16,33 +16,30 @@ app.use(require('morgan')('dev'));
 app.use(express.urlencoded({ extended: false }));
 app.use(express.static(__dirname + '/public'));
 app.use(layouts);
-// Using flash throughout app to send temp messages to user
-app.use(flash());
 
 
 // secret: What we actually will be giving the user on our site as a session cookie. 
 // resave: Save the session even if it's modified, make this false
 // saveUnitialized: If we have a new session, we save it, therefore making that true
-const sessionObject = {
+let sessionObject = {
   secret: SECRET_SESSION,
   resave: false,
   saveUninitialized: true
 }
 
-// Initialize passport and run through middleware
-
 app.use(session(sessionObject));
-// Messages that will be accessible to every view
+app.use(passport.initialize());
+app.use(passport.session());
+
+// Using flash throughout app to send temp messages to user
+app.use(flash());
+
 app.use((req, res, next) => {
   // Before every route, we will attach a user to res.local
   res.locals.alerts = req.flash();
   res.locals.currentUser = req.user;
   next();
 })
-
-app.use(passport.initialize());
-app.use(passport.session());
-
 
 app.get('/', (req, res) => {
   console.log(res.locals.alerts)
@@ -56,6 +53,7 @@ app.get('/', (req, res) => {
 
 app.use('/auth', require('./routes/auth'));
 app.use('/user', isLoggedIn, require('./routes/user'));
+app.use('/favorites', isLoggedIn, require('./routes/user'));
 
 
 

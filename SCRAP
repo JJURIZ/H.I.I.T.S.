@@ -34,3 +34,26 @@
 
 
     <p><%= isNull(fave.preview_url) %> </p>
+
+    const handler = (req, res) => res.send(path.join(__dirname, "/"))
+
+const routes = ["/", ":track"]
+
+routes.forEach( route => app.get(route, handler) 
+
+
+
+
+<h1>My Favorite Tunes</h1>
+<% faves.forEach((fave) => { %>
+  <p><%= fave.title %> </p>
+  <p><%= fave.artist %> </p>
+  <p><%= fave.explicit %> </p>
+  <p><%= fave.durationMs %> </p>
+  <% console.log(fave.preview_url) %>
+  <% if (fave.preview_url === "") { %>
+      <p>No Preview Available</p> 
+  <% } else { %>
+      <audio controls><source src="<%= fave.preview_url %>" /></audio> 
+  <% } %> 
+<% }) %>

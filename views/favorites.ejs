@@ -1,5 +1,4 @@
-<h1>test</h1>
-
+<h1>User Favorites</h1>
 
 
 <% faves.forEach((fave) => { %>
@@ -13,9 +12,7 @@
     <% } else { %>
         <audio controls><source src="<%= fave.preview_url %>" /></audio> 
     <% } %> 
-    
-    
-<pre><%= JSON.stringify(fave) %></pre>
 <% }) %>
 
 
+<a href="/user">Go to Search</a>

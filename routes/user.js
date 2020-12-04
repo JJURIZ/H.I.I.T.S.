@@ -10,11 +10,13 @@ const clientSecret = process.env.CLIENT_SECRET;
 const authKey = Buffer.from(`${clientId}:${clientSecret}`).toString("base64");
 
 // USER HOMEPAGE
-router.get("/", (req, res) => {
-      res.render("user", { tracks: [] });
-  });
+router.get('/', (req, res) => {
+    res.render('user', { tracks: [] })
+})
 
-router.get('/faveTest', (req, res) => {
+
+// USER FAVORITES
+router.get('/favorites', (req, res) => {
     db.fave.findAll({
         where: {
             userId: req.session.passport.user
@@ -32,8 +34,7 @@ router.get('/faveTest', (req, res) => {
         })
     })
     .then((faves) => {
-        console.log(`is this working? ${faves}`);
-        res.render('faveTest', { faves })
+        res.render('favorites', { faves, tracks: [] })
     })
 })
 
@@ -75,7 +76,7 @@ router.get("/:track", (req, res) => {
 });
 
 // ADD TRACK TO FAVORITES
-router.post("/", (req, res) => {
+router.post('/', (req, res) => {
   db.track.findOrCreate({
       where: { spotify_id: req.body.id },
       defaults: {
@@ -103,3 +104,5 @@ router.post("/", (req, res) => {
 });
 
 module.exports = router;
+
+
