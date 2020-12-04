@@ -53,9 +53,6 @@ app.get('/', (req, res) => {
 
 app.use('/auth', require('./routes/auth'));
 app.use('/user', isLoggedIn, require('./routes/user'));
-app.use('/favorites', isLoggedIn, require('./routes/user'));
-
-
 
 const PORT = process.env.PORT || 3005;
 const server = app.listen(PORT, () => {

@@ -16,23 +16,7 @@
   <body>
     <%- include('partials/alerts') %> 
     <header>
-      <nav>
-        <ul>
-          <% if (!currentUser) { %>
-            <li><a href="/auth/signup">Signup</a></li>
-            <li><a href="/auth/login">Login</a></li>
-            <li><a href="/user">Search</a></li>
-            <li><a href="/user/favorites">Favorites</a></li>
-          <% } else { %> 
-          <li><a href="/auth/logout">Logout</a></li>
-          <li><a href="/profile">Profile</a></li>
-          <li><a href="/user">Search</a></li>
-          <li><a href="/user/favorites">Favorites</a></li>
-          <% } %> 
-        </ul>
-      </nav>
     </header>
-    <h1>Authentication</h1>
     <%- body %>
 
         <!-- jQuery -->

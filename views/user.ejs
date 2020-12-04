@@ -1,6 +1,7 @@
+<%- include('partials/header_logged_in') %> 
 <h1>Welcome User</h1>
 
-<form method="GET" action="/user/:track"> <!--Why is this a GET and not a POST route? Does not work as -->
+<form method="GET" action="/user/:track">
   <input type="text" name="track" placeholder="Search songs..." />
   <input type="submit" />
 </form>

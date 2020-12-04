@@ -1,0 +1,9 @@
+<h1>This is the update profile page</h1>
+
+<form action="/users/journal/<%= user.id %>">
+    <textarea name="content" id="content">Edit your name</textarea>
+    <input type="hidden" name="name" value="<%= user.name %>">
+<button type="submit">
+    Update
+</button> 
+</form>
