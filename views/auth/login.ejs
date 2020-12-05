@@ -1,10 +1,11 @@
-<form action="/auth/login" method="POST">
-  <label for="auth-email">Email</label>
-  <input id="auth-email" type="email" name="email">
+<%- include('../partials/site_identity') %> 
 
-  <label for="auth-password">Password</label>
-  <input id="auth-password" type="password" name="password">
 
-  <input type="submit" value="Log In">
+<div class="login_form">
+<form action="/auth/login" method="POST" class="login_container">
+  <input id="auth-email" type="email" name="email" placeholder="Email">
+  <input id="auth-password" type="password" name="password" placeholder="Password">
+  <input type="submit" value="Log In" id="login-button">
 </form>
+</div>
 

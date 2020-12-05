@@ -1,13 +1,115 @@
+/* GLOBAL STYLE */
+* {
+  box-sizing: border-box;
+  font-size: 62.5%;
+}
+
+body {
+  font-family: 'Poppins', sans-serif;
+  background-image: linear-gradient(to bottom, rgba(214, 205, 205, 0.5), rgba(24, 12, 21, 0.75)), url("https://images.unsplash.com/photo-1517963628607-235ccdd5476c?ixlib=rb-1.2.1&ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&auto=format&fit=crop&w=1651&q=80");
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  height: 100vh;
+  width: 100vw;
+}
+
+/* HOMEPAGE */
+.site_identity {
+  position: fixed;
+  right: .05rem;
+  width: 100%;
+  height: 10rem;
+  background-color: rgba(0, 0, 0, 0.75);
+  color: white;
+  text-align: center;
+}
+
+#site_identity_title {
+  letter-spacing: 1rem;
+}
+
+.container_home {
+  background-image: linear-gradient(to bottom, rgba(214, 205, 205, 0.5), rgba(24, 12, 21, 0.75)), url("https://images.unsplash.com/photo-1517963628607-235ccdd5476c?ixlib=rb-1.2.1&ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&auto=format&fit=crop&w=1651&q=80");
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  height: 100vh;
+  width: 100vw
+}
+
+h2 {
+  color: white;
+}
+
+.login_container {
+  margin: auto;
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 15rem;
+}
+
+.auth {
+  border: 1px solid rgba(255, 255, 255, .80);
+  border-radius: 5rem;
+  height: 5rem;
+  width: 30rem;
+  text-align: center;
+  background-color: rgba(255, 255, 255, .80);
+}
+
+.auth:hover {
+  background-color: rgba(255, 255, 255, .50);
+  cursor: pointer;
+}
+.auth_link {
+  color: black;
+}
+
+.auth_link:hover {
+  text-decoration: none;
+  color: #093A40;
+}
+
 nav ul li {
   text-decoration: none;
   display: inline-block;
   margin-right: .3em;
 }
 
-h1 {
-  color: chartreuse;
+
+/* LOGIN */
+#auth-password,
+#auth-email,
+#login-button {
+  width: 30rem;
+  height: 5rem;
+  outline: none;
+  border-radius: 5rem;
+  font-size: 2rem;
+  text-align: center;
+  background-color: rgba(255, 255, 255, .80);
+  border: none;
+  border-width: 0px;
+  margin-top: 2rem;
 }
 
-h2 {
-  color: red;
+#auth-password:focus,
+#auth-email:focus {
+  outline: none;
+  box-shadow: 0 0 10px #093A40;
+}
+
+#login-button {
+  background-color: rgba(217, 178, 169, .70);
+  width: 15rem;
+}
+
+#login-button:hover {
+  background-color: rgba(217, 178, 169, .90);
+  cursor: pointer;
 }
