@@ -2,6 +2,7 @@
 <h1>Favorite Workout Songs</h1>
 <%- include('partials/alerts') %> 
 
+<!-- CONVERSION FUNCTIONS -->
 <% const msToMinutesSeconds = (ms) => { %>
     <%   let minutes = Math.floor(ms / 60000 ); %>
     <%   let seconds = ((ms % 60000) / 1000).toFixed(0); %>
@@ -12,6 +13,7 @@
       <%   return bool === true ? 'Yes' : 'No' %>
       <% } %>
 
+      
 <% uniqueTracks.forEach((fave) => { %>  <!-- ALSO would like to sort results for BOTH admin and non admin -->
     <p>Song: <%= fave.title %> </p>
     <p>Artist: <%= fave.artist %> </p>

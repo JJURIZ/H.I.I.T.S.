@@ -1,14 +1,10 @@
 <%- include('../partials/site_identity') %> 
 
-<form action="/auth/signup" method="POST">
-  <label for="new-email">Email</label>
-  <input id="new-email" type="email" name="email">
-
-  <label for="new-name">Name</label>
-  <input id="new-name" type="text" name="name">
-
-  <label for="new-password">Password</label>
-  <input id="new-password" type="password" name="password">
-
-  <input type="submit" value="Sign up">
+<div class="login_form">
+<form action="/auth/signup" method="POST" class="login_container">
+  <input id="auth-email" type="email" name="email" placeholder="Email">
+  <input id="auth-name" type="text" name="name" placeholder="Name">
+  <input id="auth-password" type="password" name="password" placeholder="Password">
+  <input id="sign-up" type="submit" value="Sign up">
 </form>
+</div>

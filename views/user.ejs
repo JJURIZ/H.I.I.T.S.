@@ -1,11 +1,16 @@
+<%- include('partials/site_identity') %> 
 <%- include('partials/header_logged_in') %> 
-<h1>Welcome User</h1>
 
-<form method="GET" action="/user/:track">
-  <input type="text" name="track" placeholder="Search songs..." />
-  <input type="submit" />
+<!-- SEARCH FORM -->
+<div class="search_form">
+<form class="search_container" method="GET" action="/user/:track" >
+  <h1>Search by Song, Artist, or Album</h1>
+  <input id="search_tracks" type="text" name="track" placeholder="Search songs..." />
+  <input id="search_submit" type="submit" />
 </form>
+</div>
 
+<!-- CONVERSION FUNCTIONS -->
 <% const msToMinutesSeconds = (ms) => { %>
 <%   let minutes = Math.floor(ms / 60000 ); %>
 <%   let seconds = ((ms % 60000) / 1000).toFixed(0); %>
@@ -16,7 +21,11 @@
   <%   return bool === true ? 'Yes' : 'No' %>
   <% } %>
 
-<% if (tracks) { %> <% tracks.forEach(track => { %>
+<!-- SEARCH RESULTS DISPLAY -->
+  <div class="search_results">
+<% if (tracks) { %> 
+  <% tracks.forEach(track => { %>
+  <div class="search_results_details">
         <h4>Name: <%= track.name %></h4>
         <h4>Artist: <%= track.album.artists[0].name %></h4>
         <h4>Length: <%= msToMinutesSeconds(track.duration_ms) %></h4>
@@ -28,12 +37,15 @@
           <input hidden type="text" name="durationMs" value="<%= track.duration_ms %>">
           <input hidden type="text" name="preview_url" value="<%= track.preview_url %>">
           <input hidden type="text" name="explicit" value="<%= track.explicit %>">
-          <button class="btn btn-primary" type="submit">Add to Favorite Songs</button>
+          <button class="fav_button" type="submit">Add to Favorites</button>
         </form>
+      </div>
     <% }) %> 
 <% } else {%>
 <h4>No Results Matching Your Search</h4>
 <% } %>
+
+</div>
 
 
 
