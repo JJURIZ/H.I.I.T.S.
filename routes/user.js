@@ -28,31 +28,16 @@ router.get("/profile", (req, res) => {
     });
 });
 
-// GET USER PROFILE FOR UPDATE
-router.get("/profile/:id", (req, res) => {
-  console.log(req.user)
-    .then((id) => {
-      console.log(id);
-      // res.render("profileupdate", { id });
-    });
-});
-
-// UPDATE USER'S NAME (PUT)
-router.put("/profile/:id", (req, res) => {
-  console.log(req);
-  var updateName = req.body.id;
-  db.user
-    .findOne({
-      where: {
-        id: req.body.id,
+// UPDATE USER'S NAME (PUT REQUEST)
+router.put("/profile", (req, res) => {
+  db.user.update(
+    { name: user.name },
+    { where: {
+        id: req.session.passport.user
       },
     })
-    .then((user) => {
-      user.name = updateName;
-      user.save();
-    })
     .then((_udpated) => {
-      res.send("Name updated successfully");
+      res.render("profile", { user });
     })
     .catch((err) => {
       console.log("An error occured", err);
@@ -92,8 +77,8 @@ router.get("/favorites", async (req, res) => {
   for (const track of uniqueTracks) {
     track.count = cache[track.spotify_id];
   }
-  console.log(uniqueTracks);
-  res.render("favorites", { uniqueTracks, tracks: [] });
+  let userId = req.session.passport.user;
+  res.render("favorites", { uniqueTracks, tracks: [], userId });
 });
 
 // FIND TRACKS
@@ -163,7 +148,7 @@ router.post("/", (req, res) => {
 });
 
 // DELETE A FAVORITE - ORIGINAL CODE
-router.delete("/:id", async (req, res) => {
+router.delete("/favorites/:id", async (req, res) => {
   let deleteTrackId = req.params.id;
   let deleteTrack = await db.fave
     .destroy({
@@ -178,7 +163,7 @@ router.delete("/:id", async (req, res) => {
   if (!deleteTrack) {
     res.render("Did not Delete");
   } else {
-    res.redirect("/favorites");
+    res.redirect("/user/favorites");
   }
 });
 

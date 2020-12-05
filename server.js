@@ -46,11 +46,6 @@ app.get('/', (req, res) => {
   res.render('index', { alerts: res.locals.alerts });
 });
 
-// EXTRANEOUS - DELETE WHEN CONFIRMED IT IS NOT NEEDED
-// app.get('/user', isLoggedIn, (req, res) => {
-//   res.render('user');
-// });
-
 app.use('/auth', require('./routes/auth'));
 app.use('/user', isLoggedIn, require('./routes/user'));
 
