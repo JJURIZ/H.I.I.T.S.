@@ -162,9 +162,8 @@ router.post("/", (req, res) => {
     });
 });
 
-// DELETE A FAVORITE
+// DELETE A FAVORITE - ORIGINAL CODE
 router.delete("/:id", async (req, res) => {
-  console.log(`delete ${req.params}`);
   let deleteTrackId = req.params.id;
   let deleteTrack = await db.fave
     .destroy({

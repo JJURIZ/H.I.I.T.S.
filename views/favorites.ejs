@@ -2,27 +2,38 @@
 <h1>User Favorites</h1>
 <%- include('partials/alerts') %> 
 
+<% const msToMinutesSeconds = (ms) => { %>
+    <%   let minutes = Math.floor(ms / 60000 ); %>
+    <%   let seconds = ((ms % 60000) / 1000).toFixed(0); %>
+    <%   return `${minutes}:${seconds < 10 ? '0' : ''}` + seconds; %>
+    <% } %>
+    
+    <% const isExplicit = (bool) => { %>
+      <%   return bool === true ? 'Yes' : 'No' %>
+      <% } %>
 
 <% uniqueTracks.forEach((fave) => { %>  <!-- ALSO would like to sort results for BOTH admin and non admin -->
-    <p><%= fave.title %> </p>
-    <p><%= fave.artist %> </p>
-    <p><%= fave.explicit %> </p>
-    <p><%= fave.durationMs %> </p>
-    <% console.log(fave.preview_url) %>
+    <p>Song: <%= fave.title %> </p>
+    <p>Artist: <%= fave.artist %> </p>
+    <p>Explicit: <%= isExplicit(fave.explicit) %> </p>
+    <p>Length: <%= msToMinutesSeconds(fave.durationMs) %> </p>
     <% if (fave.preview_url === "") { %>
         <p>No Preview Available</p> 
     <% } else { %>
         <audio controls><source src="<%= fave.preview_url %>" /></audio> 
     <% } %> 
 <!-- IF user.isAdmin THEN display total count of this track in the uniqueTracks -->
-
-
+<% if(fave.explicit) { %>
+    <br>
+    <% } else { %>
     <form method="POST" action="/favorites/<%=fave.spotify_id %>/?_method=DELETE">
         <input hidden type="text" name="spotify_id" value="<%= fave.spotify_id %>" />
         <input hidden type="text" name="userId" value="<%= fave.userId %>" />
         <button class="btn btn-light" type="submit">Remove Favorite</button>
       </form>
+    <% } %>
 <% }) %>
+
 
 
 <a href="/user">Go to Search</a>
