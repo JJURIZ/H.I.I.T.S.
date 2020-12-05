@@ -7,94 +7,94 @@ const axios = require("axios");
 const clientId = process.env.CLIENT_ID;
 const clientSecret = process.env.CLIENT_SECRET;
 const authKey = Buffer.from(`${clientId}:${clientSecret}`).toString("base64");
-const methodOverride = require('method-override');
+const methodOverride = require("method-override");
 router.use(methodOverride("_method"));
 
 // USER HOMEPAGE
-router.get('/', (req, res) => {
-    res.render('user', { tracks: [] })
-})
-
-// GET PROFILE PAGE
-router.get('/profile', (req, res) => {
-  db.user.findOne({
-      where: {
-          id: req.session.passport.user
-      }
-  })
-  .then((user) => {
-      res.render('profile', { user })
-  })
-})
-
-// GET USER PROFILE
-router.get('/profile/:id', (req, res) => {
-  db.user.findOne({
-    where: {
-      id: req.sesssion.passport.user
-    }
-  })
-  .then((id) => {
-    console.log(id)
-    res.render('profileupdate', { id })
-  })
-})
-
-// UPDATE USER'S NAME (PUT)
-router.put('/profile/:id', (req, res) => {
-  console.log(req)
-  var updateName = req.body.id;
-  db.user.findOne({
-    where: {
-      id: req.body.id,
-    }
-  }).then((user) => {
-    user.name = updateName;
-    user.save();
-  }).then((_udpated) => {
-    res.send('Name updated successfully');
-  }).catch((err) => {
-    console.log('An error occured',err);
-    res.send('Uh oh');
-  })
+router.get("/", (req, res) => {
+  res.render("user", { tracks: [] });
 });
 
+// GET PROFILE PAGE
+router.get("/profile", (req, res) => {
+  db.user
+    .findOne({
+      where: {
+        id: req.session.passport.user,
+      },
+    })
+    .then((user) => {
+      res.render("profile", { user });
+    });
+});
 
+// GET USER PROFILE FOR UPDATE
+router.get("/profile/:id", (req, res) => {
+  console.log(req.user)
+    .then((id) => {
+      console.log(id);
+      // res.render("profileupdate", { id });
+    });
+});
+
+// UPDATE USER'S NAME (PUT)
+router.put("/profile/:id", (req, res) => {
+  console.log(req);
+  var updateName = req.body.id;
+  db.user
+    .findOne({
+      where: {
+        id: req.body.id,
+      },
+    })
+    .then((user) => {
+      user.name = updateName;
+      user.save();
+    })
+    .then((_udpated) => {
+      res.send("Name updated successfully");
+    })
+    .catch((err) => {
+      console.log("An error occured", err);
+      res.send("Uh oh");
+    });
+});
 
 // USER FAVORITES PAGE
-router.get('/favorites', (req, res) => {
- 
-// Get the users
-// Pass users to next call
-
-// .then IF user.isAdmin - THEN all tracks
-// cont. ELSE !user.isAdmin - THEN only that user's tracks
-.then((user) => {
-if(user.isAdmin) {
-  db.fave.findAll()
-} else {
-    db.fave.findAll({
-        where: {
-            userId: req.session.passport.user
-        }
-    })
+router.get("/favorites", async (req, res) => {
+  let tracks;
+  if (req.user.isAdmin) {
+    tracks = await db.fave.findAll();
+  } else {
+    tracks = await db.fave.findAll({
+      where: {
+        userId: req.session.passport.user,
+      },
+    });
   }
-})
-    .then((tracks) => {
-        // console.log(tracks)
-        const spotifyIds = tracks.map(track => {
-            return track.spotify_id
-        })
-        return db.track.findAll({
-            where: {
-                spotify_id: spotifyIds
-            }
-        })
-    })
-    .then((faves) => {
-        res.render('favorites', { faves, tracks: [] })
-    })
-})
+  const spotifyIds = await tracks.map((track) => {
+    return track.spotify_id;
+  });
+  const faves = await db.track.findAll({
+    where: {
+      spotify_id: spotifyIds,
+    },
+  });
+  let cache = {};
+  for (const track of faves) {
+    if (cache[track.spotify_id]) {
+      cache[track.spotify_id]++;
+    } else {
+      cache[track.spotify_id] = 1;
+    }
+  }
+  const uniqueTracks = [...new Set(faves)];
+  for (const track of uniqueTracks) {
+    track.count = cache[track.spotify_id];
+  }
+  console.log(uniqueTracks);
+  res.render("favorites", { uniqueTracks, tracks: [] });
+});
 
 // FIND TRACKS
 router.get("/:track", (req, res) => {
@@ -134,8 +134,9 @@ router.get("/:track", (req, res) => {
 });
 
 // ADD TRACK TO FAVORITES
-router.post('/', (req, res) => {
-  db.track.findOrCreate({
+router.post("/", (req, res) => {
+  db.track
+    .findOrCreate({
       where: { spotify_id: req.body.id },
       defaults: {
         title: req.body.title,
@@ -162,28 +163,24 @@ router.post('/', (req, res) => {
 });
 
 // DELETE A FAVORITE
-router.delete('/:id', async (req, res) => {
-    console.log(`delete ${req.params}`);
-    let deleteTrackId = req.params.id;
-    let deleteTrack = await db.fave.destroy ({ 
-        where: {
-            spotify_id: deleteTrackId,
-            userId: req.session.passport.user,
-          }
+router.delete("/:id", async (req, res) => {
+  console.log(`delete ${req.params}`);
+  let deleteTrackId = req.params.id;
+  let deleteTrack = await db.fave
+    .destroy({
+      where: {
+        spotify_id: deleteTrackId,
+        userId: req.session.passport.user,
+      },
     })
     .catch((err) => {
-        console.log(err)
-    })
-    if (!deleteTrack) {
-        res.render("Did not Delete")
-    } else {
-        res.redirect('/favorites')
-    }
-})
-
-
-
+      console.log(err);
+    });
+  if (!deleteTrack) {
+    res.render("Did not Delete");
+  } else {
+    res.redirect("/favorites");
+  }
+});
 
 module.exports = router;
-
-
