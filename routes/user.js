@@ -77,8 +77,12 @@ router.get("/favorites", async (req, res) => {
   for (const track of uniqueTracks) {
     track.count = cache[track.spotify_id];
   }
+  try {
   let userId = req.session.passport.user;
   res.render("favorites", { uniqueTracks, tracks: [], userId });
+  } catch(err) {
+    console.log(err)
+  }
 });
 
 // FIND TRACKS

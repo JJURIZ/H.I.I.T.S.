@@ -467,3 +467,7 @@ router.delete('/:id', async (req, res) => {
 //   <% } else { %>
 
 //   <% } %>
+
+
+
+<a id="back_to_search" href="/user">Back to Search</a>
