@@ -7,8 +7,6 @@ const axios = require("axios");
 const clientId = process.env.CLIENT_ID;
 const clientSecret = process.env.CLIENT_SECRET;
 const authKey = Buffer.from(`${clientId}:${clientSecret}`).toString("base64");
-const methodOverride = require("method-override");
-router.use(methodOverride("_method"));
 
 // USER HOMEPAGE
 router.get("/", (req, res) => {
@@ -31,13 +29,13 @@ router.get("/profile", (req, res) => {
 // UPDATE USER'S NAME (PUT REQUEST)
 router.put("/profile", (req, res) => {
   db.user.update(
-    { name: user.name },
+    { name: req.body.name },
     { where: {
         id: req.session.passport.user
       },
     })
-    .then((_udpated) => {
-      res.render("profile", { user });
+    .then(() => {
+      res.redirect("/user/profile")
     })
     .catch((err) => {
       console.log("An error occured", err);

@@ -35,7 +35,8 @@ body {
 
 .login_container,
 .search_container,
-#favorites_title{
+#favorites_title,
+.profile_container {
   margin: auto;
   width: 50%;
   display: flex;
@@ -44,7 +45,8 @@ body {
   margin-top: 15rem;
 }
 
-#favorites_title {
+#favorites_title,
+#profile_header {
   margin-top: 10rem;
   margin-bottom: 3rem;
 }
@@ -96,7 +98,9 @@ a {
 #login-button,
 #sign-up,
 #search_tracks,
-#search_submit {
+#search_submit,
+#update_user_name,
+#update_name_button {
   width: 50rem;
   height: 5rem;
   outline: none;
@@ -117,14 +121,16 @@ a {
 
 #login-button,
 #sign-up,
-#search_submit  {
+#search_submit,
+#update_name_button  {
   background-color: rgba(217, 178, 169, .90);
   width: 25rem;
 }
 
 #login-button:hover,
 #sign-up:hover,
-#search_submit:hover {
+#search_submit:hover,
+#update_name_button:hover  {
   background-color: rgba(179, 147, 140, 0.99);
   cursor: pointer;
 }
@@ -163,7 +169,8 @@ a {
 }
 
 #search_form_title,
-#favorites_title {
+#favorites_title,
+#profile_header {
   color: white;
 }
 
@@ -200,4 +207,13 @@ a {
 #no_preview {
   font-size: 2.5rem;
   margin: 1.8rem 0 3rem 0;
+}
+
+/* PROFILE */
+#profile_header {
+  color: white;
+}
+
+.profile_update_form {
+  font-size: 2rem;
 }

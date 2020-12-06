@@ -1,10 +1,9 @@
-<%- include('partials/header_logged_in') %> 
-<h1>Welcome <%= user.name %>. This is your Profile Page</h1>
+<%- include('partials/header_logged_in') %>
 
-<h1>Change Your Name!</h1>
-    
-<form method="POST" action="/update?_method=PUT">
-    <label for="name">Update name</label>
-    <input type="text" name="name" id="name" placeholder="Current: <%= user.name %>">
-    <input type="submit" value="Update">
-</form>
+<div class="profile_update_form">
+  <form method="POST" action="/user/profile?_method=PUT" class="profile_container">
+    <h1 id="profile_header">Profile Update</h1>
+    <input id="update_user_name" type="text" name="name" id="name" placeholder="Current Name: <%= user.name %>"/>
+    <input type="submit" value="Update" id="update_name_button" />
+  </form>
+</div>
