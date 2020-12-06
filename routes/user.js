@@ -56,6 +56,7 @@ router.get("/favorites", async (req, res) => {
       },
     });
   }
+  console.log(tracks);
   const spotifyIds = await tracks.map((track) => {
     return track.spotify_id;
   });
