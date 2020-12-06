@@ -105,7 +105,7 @@ router.get("/:track", (req, res) => {
       let track = encodeURIComponent(req.query.track);
       axios
         .get(
-          `https://api.spotify.com/v1/search?q=${track}&type=track,track&offset=0&limit=10`,
+          `https://api.spotify.com/v1/search?q=${track}&type=track,track&offset=0&limit=12`,
           config
         )
         .then((response) => {

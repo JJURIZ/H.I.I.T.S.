@@ -1,5 +1,5 @@
 <%- include('partials/header_logged_in') %> 
-<h1>Favorite Workout Songs</h1>
+<h1 id="favorites_title">Favorite Workout Songs</h1>
 <%- include('partials/alerts') %> 
 
 <!-- CONVERSION FUNCTIONS -->
@@ -13,25 +13,27 @@
       <%   return bool === true ? 'Yes' : 'No' %>
       <% } %>
 
-      
+<!-- FAVORITES -->
+<div class="favorites">
 <% uniqueTracks.forEach((fave) => { %>  <!-- ALSO would like to sort results for BOTH admin and non admin -->
-    <p>Song: <%= fave.title %> </p>
-    <p>Artist: <%= fave.artist %> </p>
-    <p>Explicit: <%= isExplicit(fave.explicit) %> </p>
-    <p>Length: <%= msToMinutesSeconds(fave.durationMs) %> </p>
+    <div class="favorites_list">
+    <p class="search_results_result"><span class="search_results_tag">Song:</span> <%= fave.title %> </p>
+    <p class="search_results_result"><span class="search_results_tag">Artist:</span> <%= fave.artist %> </p>
+    <p class="search_results_result"><span class="search_results_tag">Explicit:</span> <%= isExplicit(fave.explicit) %> </p>
+    <p class="search_results_result"><span class="search_results_tag">Length:</span> <%= msToMinutesSeconds(fave.durationMs) %> </p>
     <% if (fave.preview_url === "") { %>
-        <p>No Preview Available</p> 
+        <p class="search_results_result" id="no_preview">No Preview Available</p> 
     <% } else { %>
-        <audio controls><source src="<%= fave.preview_url %>" /></audio> 
+        <audio id="audio_controller" controls><source src="<%= fave.preview_url %>" /></audio> 
     <% } %> 
 <!-- IF user.isAdmin - display total count of this track in the faves -->
 <form method="POST" action="/user/favorites/<%= fave.spotify_id %>/?_method=DELETE">
     <input hidden type="text" name="spotify_id" value="<%= fave.spotify_id %>" />
     <input hidden type="text" name="userId" value="<%= userId %>" />
-    <button class="btn btn-light" type="submit">Remove Favorite</button>
+    <button class="fav_button" type="submit">Remove Favorite</button>
   </form>
+</div>
 <% }) %>
+</div>
 
-
-
-<a href="/user">Back to Search</a>
+<a id="back_to_search" href="/user">Back to Search</a>

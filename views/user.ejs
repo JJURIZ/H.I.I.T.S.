@@ -4,8 +4,8 @@
 <!-- SEARCH FORM -->
 <div class="search_form">
 <form class="search_container" method="GET" action="/user/:track" >
-  <h1>Search by Song, Artist, or Album</h1>
-  <input id="search_tracks" type="text" name="track" placeholder="Search songs..." />
+  <h2 id="search_form_title">Search by Song, Artist, or Album</h1>
+  <input id="search_tracks" type="text" name="track" placeholder="Search" />
   <input id="search_submit" type="submit" />
 </form>
 </div>
@@ -26,10 +26,10 @@
 <% if (tracks) { %> 
   <% tracks.forEach(track => { %>
   <div class="search_results_details">
-        <h4>Name: <%= track.name %></h4>
-        <h4>Artist: <%= track.album.artists[0].name %></h4>
-        <h4>Length: <%= msToMinutesSeconds(track.duration_ms) %></h4>
-        <h4>Explicit: <%= isExplicit(track.explicit) %></h4>
+        <p class="search_results_result"><span class="search_results_tag">Name:</span> <%= track.name %></p>
+        <p class="search_results_result"><span class="search_results_tag">Artist:</span> <%= track.album.artists[0].name %></p>
+        <p class="search_results_result"><span class="search_results_tag">Length:</span> <%= msToMinutesSeconds(track.duration_ms) %></p>
+        <p class="search_results_result"><span class="search_results_tag">Explicit:</span> <%= isExplicit(track.explicit) %></p>
         <form method="POST" action="/user"> <!--Action = Route -->
           <input hidden type="text" name="id" value="<%= track.id %>">
           <input hidden type="text" name="title" value="<%= track.name %>">
