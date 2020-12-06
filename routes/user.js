@@ -80,7 +80,8 @@ router.get("/favorites", async (req, res) => {
   let userId = req.session.passport.user;
   res.render("favorites", { uniqueTracks, tracks: [], userId });
   } catch(err) {
-    console.log(err)
+    console.log(`This is the error: ${err}`)
+    res.render("404")
   }
 });
 
