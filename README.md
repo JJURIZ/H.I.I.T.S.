@@ -5,7 +5,7 @@
 Poor music choices plague many gyms, leading to frustration on the part of trainers and members. 
 Though H.I.T.T.S. will not eliminate this frustration completely, it is a step in allievating the universal discomfort. 
 
-### How It Works
+### <ins>How It Works</ins>
 Users create an account using their email address and name. \
 Once logged in members can search the Spotify database for their favorite songs.
 Results are returned with the artist, length, explicit lyrics notification, and 30 second preview (if available). Once a gym friendly track is selected, members click the "Add to Favorites" button. \
@@ -16,7 +16,7 @@ Administrators have the same functionality as members. However, when an admin vi
 By reviewing the gym members favorite songs, playlists can be created on the platform of the administrators choice. \
 NOTE: Playlist creation is outside the scope of H.I.T.T.S.
 
-### How to Install
+### <ins>How to Install</ins>
 IMPORTANT NOTE
 H.I.I.T.S. requires a Spotify Developer app. You must have a Spotify account (free) before proceeding.\
 -To create your Spotify App, go to the [Developer Dashboard](https://developer.spotify.com/dashboard/applications) and click `Create An App`.\
@@ -37,28 +37,44 @@ To install H.I.I.T.S., clone the [git repository](https://github.com/JJURIZ/H.I.
 -Record your CLIENT_ID, CLIENT_SECRET, and create a SECRET_SESSION string. See image below for example: \
 ![.env_example](public/assets/Secrets.png) \
 -Launch the application using the command `node server.js`. \
--In your browser, navigate to `localhost:3005`
+-In your browser, navigate to `localhost:3005` \
 
-## Technologies Used
-JavaScript, Express, CSS, EJS, Postgres, and Sequelize
+or 
+
+-[Live Demo](https://hiitsongs.herokuapp.com/)
 
 
-
-## SQL Tables 
-### User Table
+## Database Structure
+In order to create a multi-user application a join table was required allowing many to many relationships.
+### <ins>Users Table</ins>
+The `users` table contains information related to the user. A user's email address is used to log into the application. \
+Users with the `isAdmin` flag as true see the results of all user's favorite songs. 
 |name   |email   |password   |isAdmin   |
 |---|---|---|---|---|
-|Joe Smith   |joesmith@email.com   |pa$$word   |f  | 
+|Joe Smith   |joesmith@email.com   |pa$$word   |f  |
 
-### Track Table
+
+### <ins>Tracks Table</ins>
+`tracks` table contains the relevant information about the songs added by the user.
+
 |title   |artist   |explicit   |durationMs   |spotify_id |preview_url 
 |---|---|---|---|---|---|
 |Song #2  |Blur   |f  |198000  |3GfOAdcoc3X5GPiiXmpBjK |spotify:track:3GfOAdcoc3X5GPiiXmpBjK
 
-### Fave Table (JOIN)
+### <ins>Faves Table (JOIN)</ins>
+As designed, many users may 'favorite' the same song. \
+The `faves` table joins the `users` and `tracks` tables. \
+`userId` joins to the `users` table `id` field. \
+`spotify_id` joins to the `tracks` table column of the same name. \
+In the example below, two users are associated with the same track.
 |userId  |spotify_id  |
 |---|---|
 |3  |3GfOAdcoc3X5GPiiXmpBjK   |
+|4  |3GfOAdcoc3X5GPiiXmpBjK   |
+
+
+## Technologies Used
+JavaScript, Express, CSS, EJS, Postgres, and Sequelize 
 
 
 
