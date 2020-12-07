@@ -39,7 +39,7 @@ router.put("/profile", (req, res) => {
     })
     .catch((err) => {
       console.log("An error occured", err);
-      res.send("Uh oh");
+      res.render("404")
     });
 });
 
@@ -117,7 +117,8 @@ router.get("/:track", (req, res) => {
           res.render("user", { tracks });
         })
         .catch((err) => {
-          console.log(err);
+          console.log(err);    res.render("404")
+          res.render("404")
         });
     });
 });
@@ -145,6 +146,7 @@ router.post("/", (req, res) => {
     })
     .catch((err) => {
       console.log(err);
+      res.render("404")
     })
     .then(() => {
       res.redirect("/user");
@@ -163,6 +165,7 @@ router.delete("/favorites/:id", async (req, res) => {
     })
     .catch((err) => {
       console.log(err);
+      res.render("404")
     });
   if (!deleteTrack) {
     res.render("Did not Delete");

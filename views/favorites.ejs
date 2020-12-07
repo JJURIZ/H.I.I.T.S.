@@ -19,7 +19,7 @@
 
 <!-- FAVORITES -->
 <div class="favorites">
-<% uniqueTracks.forEach((fave) => { %>  <!-- ALSO would like to sort results for BOTH admin and non admin -->
+<% uniqueTracks.forEach((fave) => { %>
     <div class="favorites_list">
     <p class="search_results_result"><span class="search_results_tag">Song:</span> <%= fave.title %> </p>
     <p class="search_results_result"><span class="search_results_tag">Artist:</span> <%= fave.artist %> </p>
@@ -30,7 +30,6 @@
     <% } else { %>
         <audio id="audio_controller" controls><source src="<%= fave.preview_url %>" /></audio> 
     <% } %> 
-<!-- IF user.isAdmin - display total count of this track in the faves -->
 <form method="POST" action="/user/favorites/<%= fave.spotify_id %>/?_method=DELETE">
     <input hidden type="text" name="spotify_id" value="<%= fave.spotify_id %>" />
     <input hidden type="text" name="userId" value="<%= userId %>" />

@@ -29,6 +29,11 @@
         <p class="search_results_result"><span class="search_results_tag">Artist:</span> <%= track.album.artists[0].name %></p>
         <p class="search_results_result"><span class="search_results_tag">Length:</span> <%= msToMinutesSeconds(track.duration_ms) %></p>
         <p class="search_results_result"><span class="search_results_tag">Explicit:</span> <%= isExplicit(track.explicit) %></p>
+        <% if (track.preview_url === "") { %>
+          <p class="search_results_result" id="no_preview">No Preview Available</p> 
+      <% } else { %>
+          <audio id="audio_controller" controls><source src="<%= track.preview_url %>" /></audio> 
+      <% } %> 
         <form method="POST" action="/user"> <!--Action = Route -->
           <input hidden type="text" name="id" value="<%= track.id %>">
           <input hidden type="text" name="title" value="<%= track.name %>">

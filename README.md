@@ -1,107 +1,66 @@
-# Express Authentication
+# H.I.I.T.S. - High Intensity Interval Training Songs
 
-Express authentication template using Passport + flash messages + custom middleware
+## Description 
+### A webapp for gym users to share their favorite songs with gym owners.
+Poor music choices plague many gyms, leading to frustration on the part of trainers and members. 
+Though H.I.T.T.S. will not eliminate this frustration completely, it is a step in allievating the universal discomfort. 
 
-## What it includes
+### How It Works
+Users create an account using their email address and name. \
+Once logged in members can search the Spotify database for their favorite songs.
+Results are returned with the artist, length, explicit lyrics notification, and 30 second preview (if available). Once a gym friendly track is selected, members click the "Add to Favorites" button. \
+To see a list of favorite tracks, members click the "Favorites" menu option. \
+Users may change their profile name by clicking Profile and entering a new name.
 
-* Sequelize user model / migration
-* Settings for PostgreSQL
-* Passport and passport-local for authentication
-* Sessions to keep user logged in between pages
-* Flash messages for errors and successes
-* Passwords that are hashed with BCrypt
-* EJS Templating and EJS Layouts
+Administrators have the same functionality as members. However, when an admin views Favorites, they will see all tracks added by all gym members. 
+By reviewing the gym members favorite songs, playlists can be created on the platform of the administrators choice. \
+NOTE: Playlist creation is outside the scope of H.I.T.T.S.
 
-### User Model
+### How to Install
+IMPORTANT NOTE
+H.I.I.T.S. requires a Spotify Developer app. You must have a Spotify account (free) before proceeding.\
+-To create your Spotify App, go to the [Developer Dashboard](https://developer.spotify.com/dashboard/applications) and click `Create An App`.\
+-Provide and app name and brief description. Accept the terms and conditions and click `Create`. \
+-The client ID and client secret are available here. Refer to these codes after installation. \
+-Click the `Edit Settings` button. 
+-Type in your redirect URI. Typically this will be `http://localhost:3005`. Should you prefer a different port, change the port value to match your local application setting. \
+-Click Add. \
+-At the bottom of `Edit Settings` click the `Save` button to complete Spotify setup. 
 
-| Column Name | Data Type | Notes |
-| --------------- | ------------- | ------------------------------ |
-| id | Integer | Serial Primary Key, Auto-generated |
-| name | String | Must be provided |
-| email | String | Must be unique / used for login |
-| password | String | Stored as a hash |
-| createdAt | Date | Auto-generated |
-| updatedAt | Date | Auto-generated |
 
-### Default Routes
+To install H.I.I.T.S., clone the [git repository](https://github.com/JJURIZ/H.I.I.T.S.). \
+-Once cloned, use the CLI to navigate to the cloned directory. \
+-Run `npm install` to install the necessary dependencies. \
+-Create a new file called `.env` in the root directory of the application. This will be used to store sensitive app information. 
+-Open the app directory in your preferred editor. \
+-Open the `.env` file created previously. 
+-Record your CLIENT_ID, CLIENT_SECRET, and create a SECRET_SESSION string. See image below for example: \
+![.env_example](public/assets/Secrets.png) \
+-Launch the application using the command `node server.js`. \
+-In your browser, navigate to `localhost:3005`
 
-| Method | Path | Location | Purpose |
-| ------ | ---------------- | -------------- | ------------------- |
-| GET | / | server.js | Home page |
-| GET | /auth/login | auth.js | Login form |
-| GET | /auth/signup | auth.js | Signup form |
-| POST | /auth/login | auth.js | Login user |
-| POST | /auth/signup | auth.js | Creates User |
-| GET | /auth/logout | auth.js | Removes session info |
-| GET | /profile | server.js | Regular User Profile |
+## Technologies Used
+JavaScript, Express, CSS, EJS, Postgres, and Sequelize
 
-## Steps To Use
 
-#### 1. Create a new repo on Github and use your 'express-authentication' as the template
 
-When we are finished with this boilerplate, we are going to make it a template on Github that will allow us to create a new repo on Github with all this code already loaded in.
-* Go to `github.com` and create a new repository. In the template dropdown, choose this template.
-* Clone your new repo to your local machine
-* Get Codin'!
+## SQL Tables 
+### User Table
+|name   |email   |password   |isAdmin   |
+|---|---|---|---|---|
+|Joe Smith   |joesmith@email.com   |pa$$word   |f  | 
 
-#### 2. Delete any .keep files
+### Track Table
+|title   |artist   |explicit   |durationMs   |spotify_id |preview_url 
+|---|---|---|---|---|---|
+|Song #2  |Blur   |f  |198000  |3GfOAdcoc3X5GPiiXmpBjK |spotify:track:3GfOAdcoc3X5GPiiXmpBjK
 
-The `.keep` files are there to maintain the file structure of the auth. If there is a folder that has nothing in it, git won't add it. The dev work around is to add a file to it that has nothing in it, just forces git to keep the folder so we can use it later.
+### Fave Table (JOIN)
+|userId  |spotify_id  |
+|---|---|
+|3  |3GfOAdcoc3X5GPiiXmpBjK   |
 
-#### 3. Install node modules from the package.json
 
-```
-npm install
-```
 
-(Or just `npm i` for short)
 
-#### 4. Customize with new project name
 
-Remove defaulty type stuff. Some areas to consider are:
-
-* Title in `layout.ejs`
-* Description/Repo Link in `package.json`
-* Remove boilerplate's README content and replace with new project's readme
-
-#### 5. Create a new database for the new project
-
-Using the sequelize command line interface, you can create a new database from the terminal.
-
-```
-createdb <new_db_name>
-```
-
-#### 6. Update `config.json`
-
-* Change the database name
-* Other settings are likely okay, but check username, password, and dialect
-
-#### 7. Check the models and migrations for relevance to your project's needs
-
-For example, if your project requires a birthdate field, then don't add that in there. 
-
-> When changing your models, update both the model and the migration.
-
-#### 8. Run the migrations
-
-```
-sequelize db:migrate
-```
-
-#### 9. Add a `.env` file with the following fields:
-
-* SESSION_SECRET: Can be any random string; usually a hash in production
-* PORT: Usually 3000 or 8000
-
-#### 10. Run server; make sure it works
-
-```
-nodemon
-```
-
-or
-
-```
-node index.js
-```
