@@ -124,7 +124,7 @@ router.get("/favorites", async (req, res) => {
 ## Lessons Learned
 A future blog post will dive deeper into this. Every day was a lesson in patience and avoiding panic. \
 There were many challenges with this project, from routing to implementing the user and admin favorites view. \
-This is the first API requiring authorization I worked with. I spent many hours reading Spotify's API documentation and watching videos on how to implement it. \
-The greatest lesson I learned from this p
+This is the first API requiring authorization I've worked with. I spent many hours reading Spotify's API documentation and watching videos on how to implement it. \
+The concept and execution of routing in Express finally 'sunk in' during this project.
 
 
