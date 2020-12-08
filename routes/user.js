@@ -156,13 +156,20 @@ router.post("/", (req, res) => {
 // DELETE A FAVORITE - ORIGINAL CODE
 router.delete("/favorites/:id", async (req, res) => {
   let deleteTrackId = req.params.id;
-  let deleteTrack = await db.fave
-    .destroy({
-      where: {
-        spotify_id: deleteTrackId,
-        userId: req.session.passport.user,
-      },
-    })
+  let deleteTrack = await db.fave;
+  let destroyTrack = { spotify_id: deleteTrackId, userId: req.session.passport.user }
+  let currentUser = await db.user.findOne({
+    where: {
+      id: req.session.passport.user 
+    }
+  })
+  console.log(currentUser)
+  if(currentUser.isAdmin) {
+    destroyTrack = { spotify_id: deleteTrackId }
+  } 
+    deleteTrack.destroy(
+       { where: destroyTrack }
+       )
     .catch((err) => {
       console.log(err);
       res.render("404")
